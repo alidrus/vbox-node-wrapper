@@ -5,6 +5,8 @@
 const execSync = require("child_process").execSync;
 
 module.exports = {
+    vbmCommand: null,
+
     error: null,
 
     execute(command) {
@@ -14,7 +16,12 @@ module.exports = {
     },
 
     managerCommand() {
-        return this.execute('which VBoxManage');
+        if (!this.vbmCommand)
+        {
+            this.vbmCommand = this.execute('which VBoxManage');
+        }
+
+        return this.vbmCommand;
     },
 
     // List available virtual machines
