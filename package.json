@@ -1,0 +1,27 @@
+{
+    "name": "vbox-node-wrapper",
+    "version": "0.0.1",
+    "description": "CLI tools to simplify running and connecting to VirtualBox VMs written in NodeJS.",
+    "main": "index.js",
+    "type": "module",
+    "scripts": {
+        "dev": "yarn development",
+        "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "watch": "yarn development -- --watch",
+        "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "prod": "yarn production",
+        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+    },
+    "author": "Abu Bakar Al-Idrus",
+    "license": "MIT",
+    "dependencies": {
+        "@babel/cli": "^7.10.4",
+        "@babel/polyfill": "^7.10.4",
+        "@babel/preset-env": "^7.10.4",
+        "@babel/register": "^7.10.4",
+        "easy-table": "^1.1.1"
+    },
+    "devDependencies": {
+        "vue-template-compiler": "^2.6.11"
+    }
+}
