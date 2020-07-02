@@ -2,7 +2,6 @@
     "name": "vbox-node-wrapper",
     "version": "0.2.0",
     "description": "CLI tool to simplify running and connecting to VirtualBox VMs written in NodeJS.",
-    "main": "index.js",
     "browser": {
         "child_process": false,
         "fs": false
