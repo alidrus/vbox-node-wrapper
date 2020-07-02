@@ -2,8 +2,8 @@
  * vim: syntax=javascript expandtab tabstop=4 shiftwidth=4 softtabstop=4:
  */
 
-import process from "process";
-import fs from "fs";
+const process = require("process");
+const fs      = require("fs");
 
 if (!process.env.HOME)
 {
@@ -19,6 +19,4 @@ if (!fs.existsSync(configurationFile))
     process.exit(1);
 }
 
-let configuration = JSON.parse(fs.readFileSync(configurationFile, "utf8"));
-
-export default configuration;
+module.exports = JSON.parse(fs.readFileSync(configurationFile, "utf8"));

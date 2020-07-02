@@ -2,9 +2,9 @@
  * vim: syntax=javascript expandtab tabstop=4 shiftwidth=4 softtabstop=4:
  */
 
-import { execSync } from "child_process";
+const execSync = require("child_process").execSync;
 
-export default {
+module.exports = {
     error: null,
 
     execute(command) {
