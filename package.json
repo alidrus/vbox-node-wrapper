@@ -10,7 +10,8 @@
         "dev": "yarn build-development",
         "prod": "yarn build-production",
         "build-development": "webpack --config webpack.config.js",
-        "build-production": "pkg src/vbox.js --output dist/vbox"
+        "build-production": "pkg src/vbox.js --output dist/vbox",
+        "cleanup": "rm dist/*"
     },
     "author": "Abu Bakar Al-Idrus",
     "license": "MIT",
