@@ -3,8 +3,15 @@
     "version": "0.2.0",
     "description": "CLI tool to simplify running and connecting to VirtualBox VMs written in NodeJS.",
     "main": "index.js",
+    "browser": {
+        "child_process": false,
+        "fs": false
+    },
     "scripts": {
-        "build": "pkg src/vbox.js --output dist/vbox"
+        "dev": "yarn build-development",
+        "prod": "yarn build-production",
+        "build-development": "webpack --config webpack.config.js",
+        "build-production": "pkg src/vbox.js --output dist/vbox"
     },
     "author": "Abu Bakar Al-Idrus",
     "license": "MIT",
@@ -16,6 +23,8 @@
         "easy-table": "^1.1.1"
     },
     "devDependencies": {
-        "pkg": "^4.4.9"
+        "pkg": "^4.4.9",
+        "webpack": "^4.43.0",
+        "webpack-cli": "^3.3.12"
     }
 }
