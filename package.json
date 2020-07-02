@@ -1,6 +1,6 @@
 {
     "name": "vbox-node-wrapper",
-    "version": "0.0.1",
+    "version": "0.2.0",
     "description": "CLI tool to simplify running and connecting to VirtualBox VMs written in NodeJS.",
     "main": "index.js",
     "scripts": {
@@ -16,7 +16,6 @@
         "easy-table": "^1.1.1"
     },
     "devDependencies": {
-        "pkg": "^4.4.9",
-        "vue-template-compiler": "^2.6.11"
+        "pkg": "^4.4.9"
     }
 }
