@@ -3,13 +3,12 @@
  */
 
 const path          = require("path"),
-      process       = require("process"),
-      { titlecase } = require("stringcase");
+      process       = require("process");
 
 const commands = require("./commands.js"),
       config   = require("./config.js")
-      package  = require("../package.json"),
-      ls       = require("./ls");
+      help     = require("./help.js"),
+      ls       = require("./ls.js");
 
 // Process command line arguments and get only the basename
 let cliArguments = [];
@@ -17,20 +16,15 @@ process.argv.forEach((argv) => {
     cliArguments.push(path.basename(argv));
 });
 
-if (process.argv.length < 3)
+if (process.argv.length <= 2 || (process.argv.length >= 3 && process.argv[2] === "help"))
 {
-    // Show package information
-    console.log(titlecase(package.name) + " " + package.version + "\n"
-        + package.description + "\n");
+    let parameters = Array.from(process.argv);
 
-    // Show usage information.
-    console.log("Usage:");
-    console.log("    " + path.basename(process.argv[0]) + " <command> [options [arguments]]\n");
+    parameters.shift();
+    parameters.shift();
+    parameters.shift();
 
-    // Show available commands.
-    console.log("Available commands:");
-    console.log("    ls    List out available VMs");
-
+    help(process.argv, parameters);
     process.exit(0);
 }
 
