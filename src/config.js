@@ -32,7 +32,7 @@ class VBoxConfig {
         }
 
         // Get config object from the config file
-        let configArray = JSON.parse(fs.readFileSync(this.#configFile, "utf8"));
+        this.#configArray = JSON.parse(fs.readFileSync(this.#configFile, "utf8"));
 
         // Invoke our config sanitizer.
         this.sanitizeConfig();
@@ -100,7 +100,7 @@ class VBoxConfig {
         return this.#configFile;
     }
 
-    add(uuid, name, sshHost = null, sshPort = null) {
+    update(uuid, name, sshHost = null, sshPort = null) {
         if (typeof uuid !== "string")
         {
             let error = new Error("HOME environment variable not found");
@@ -110,7 +110,36 @@ class VBoxConfig {
             throw error;
         }
 
-        this.#configArray.find( vm => vm.uuid === uuid )
+        const index = this.#configArray.findIndex( vm => vm.uuid === uuid )
+
+        if (index === -1)
+        {
+            let vmObj = {
+                uuid,
+                name,
+                sshHost,
+                sshPort
+            };
+
+            this.#configArray.push(vmObj);
+        }
+        else
+        {
+            this.#configArray[index].uuid = uuid;
+            this.#configArray[index].name = name;
+
+            if (sshHost !== null)
+            {
+                this.#configArray[index].sshHost = sshHost;
+            }
+
+            if (sshPort !== null)
+            {
+                this.#configArray[index].sshPort = sshPort;
+            }
+        }
+
+        this.sanitizeConfig();
     }
 };
 
