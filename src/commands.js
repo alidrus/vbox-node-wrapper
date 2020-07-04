@@ -2,26 +2,38 @@
  * vim: syntax=javascript expandtab tabstop=4 shiftwidth=4 softtabstop=4:
  */
 
-const execSync = require("child_process").execSync;
+const childProcess = require("child_process")
+      process      = require("process");
 
 module.exports = {
-    vbmCommand: null,
+    vBoxManage: null,
+
+    ssh: null,
 
     error: null,
 
     execute(command) {
-        return execSync(command, {
+        return childProcess.execSync(command, {
             encoding: "utf8"
         }).trim();
     },
 
-    managerCommand() {
-        if (!this.vbmCommand)
+    sshCommand() {
+        if (!this.vBoxManage)
         {
-            this.vbmCommand = this.execute('which VBoxManage');
+            this.ssh = this.execute('which ssh');
         }
 
-        return this.vbmCommand;
+        return this.ssh;
+    },
+
+    managerCommand() {
+        if (!this.vBoxManage)
+        {
+            this.vBoxManage = this.execute('which VBoxManage');
+        }
+
+        return this.vBoxManage;
     },
 
     // List available virtual machines
@@ -45,12 +57,39 @@ module.exports = {
     },
 
     // Start a virtual machine
-    start(uuid) {
-        return this.execute(this.managerCommand() + " startvm " + uuid);
+    start(uuid, headless = true) {
+        return this.execute(this.managerCommand() + " startvm " + uuid + (headless ? " --type headless" : ""));
     },
 
     // Save the virtual machine state and suspend it
     suspend(uuid) {
-        return this.execute(this.managerCommand() + " controlvm " + uuid + " ");
+        return this.execute(this.managerCommand() + " controlvm " + uuid + " savestate");
+    },
+
+    ssh(sshHost, sshPort, username) {
+        // Spawn options
+        const options = {
+            stdio: [ 0, 1, 2 ],
+            env: process.env
+        };
+
+        // Spawn arguments
+        const arguments = [sshHost, '-l', username, '-p', sshPort];
+
+        // If byobu/tmux/screen is running locally, suppress it from
+        // automatically running remotely
+        if (process.env.TMUX || process.env.TERM.match(/^screen/))
+        {
+            arguments.push("-t");
+            arguments.push("bash");
+        }
+
+        // Spawn ssh
+        const ssh = childProcess.spawn(this.sshCommand(), arguments, options);
+
+        // Exit script on remote exit
+        ssh.on("exit", function(code, signal) {
+            process.exit(0);
+        });
     }
 };
