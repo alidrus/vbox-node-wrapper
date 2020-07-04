@@ -13,6 +13,7 @@ command line script. I decided to rewrite it as a NodeJS command-line app.
 ## Requirement
 To use this utility, you will need:
 - NodeJS, v14 recommended.
+- Yarn
 - VirtualBox with configured virtual machines.
 - Linux, MacOS or any Unix-like OS supported by NodeJS.
 
