@@ -100,7 +100,7 @@ class VBoxConfig {
         return this.#configFile;
     }
 
-    update(uuid, name, sshHost = null, sshPort = null) {
+    update(uuid, name = null, sshHost = null, sshPort = null) {
         if (typeof uuid !== "string")
         {
             let error = new Error("HOME environment variable not found");
@@ -115,18 +115,34 @@ class VBoxConfig {
         if (index === -1)
         {
             let vmObj = {
-                uuid,
-                name,
-                sshHost,
-                sshPort
+                uuid
             };
+
+            if (name !== null)
+            {
+                vmObj.name = name;
+            }
+
+            if (sshHost !== null)
+            {
+                vmObj.sshHost = sshHost;
+            }
+
+            if (sshPort !== null)
+            {
+                vmObj.sshPort = sshPort;
+            }
 
             this.#configArray.push(vmObj);
         }
         else
         {
             this.#configArray[index].uuid = uuid;
-            this.#configArray[index].name = name;
+
+            if (name !== null)
+            {
+                this.#configArray[index].name = name;
+            }
 
             if (sshHost !== null)
             {
