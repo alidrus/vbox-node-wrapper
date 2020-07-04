@@ -17,7 +17,7 @@
         "prod": "yarn build-production",
         "build-development": "webpack --config webpack.config.js",
         "build-production": "pkg . --output dist/vbox",
-        "cleanup": "rm dist/*"
+        "cleanup": "rm -fr dist/*"
     },
     "author": "Abu Bakar Al-Idrus",
     "license": "MIT",
