@@ -17,6 +17,7 @@
         "prod": "yarn build-production",
         "build-development": "webpack --config webpack.config.js",
         "build-production": "pkg . --output dist/vbox",
+        "install": "[ -e dist/vbox ] || yarn prod >& /dev/null && mkdir -p ${HOME}/bin && install -m 0755 dist/vbox ${HOME}/bin",
         "cleanup": "rm -fr dist/*"
     },
     "author": "Abu Bakar Al-Idrus",
