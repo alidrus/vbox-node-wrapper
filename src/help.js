@@ -46,7 +46,7 @@ module.exports = function(argv, parameters) {
         // Show usage information.
         console.log("Usage:");
         console.group();
-        console.log("ls\n");
+        console.log("%s ls\n", path.basename(argv[0]));
         console.groupEnd();
 
         // Show help description
@@ -61,7 +61,7 @@ module.exports = function(argv, parameters) {
         // Show usage information.
         console.log("Usage:");
         console.group();
-        console.log("set <VM#> <property> [value]\n");
+        console.log("%s set <VM#> <property> [value]\n", path.basename(argv[0]));
         console.groupEnd();
 
         // Show usage information.
@@ -85,7 +85,7 @@ module.exports = function(argv, parameters) {
         // Show usage information.
         console.log("Usage:");
         console.group();
-        console.log("shutdown <VM#>\n");
+        console.log("%s shutdown <VM#>\n", path.basename(argv[0]));
         console.groupEnd();
 
         // Show help description
@@ -99,15 +99,25 @@ module.exports = function(argv, parameters) {
         // Show usage information.
         console.log("Usage:");
         console.group();
-        console.log("ssh <VM#> <username>\n");
+        console.log("%s ssh <VM#> <username> [extra options and arguments ...]\n", path.basename(argv[0]));
         console.groupEnd();
 
         // Show help description
         console.log("Help:");
         console.group();
-        console.log("Connect to the VM via SSH and login as <username>. The sshHost");
-        console.log("and sshPort properties must be set prior to making a connection.");
-        console.log("See 'help set' for more information.");
+        console.log("Connect to the VM via SSH and login as <username>.");
+        console.log("The sshHost and sshPort properties must be set prior to making a");
+        console.log("connection. See 'help set' for more information.\n");
+        console.groupEnd();
+
+        // Show extra options and arguments help
+        console.log("Extra Options and Arguments:");
+        console.group();
+        console.log("Extra options and arguments may be appended after <username>");
+        console.log("e.g:");
+        console.group();
+        console.log("%s ssh 3 myuser -L 8080:localhost:80", path.basename(argv[0]));
+        console.groupEnd();
         console.groupEnd();
     }
 
@@ -115,7 +125,7 @@ module.exports = function(argv, parameters) {
         // Show usage information.
         console.log("Usage:");
         console.group();
-        console.log("start <VM#>\n");
+        console.log("%s start <VM#>\n", path.basename(argv[0]));
         console.groupEnd();
 
         // Show help description
@@ -129,7 +139,7 @@ module.exports = function(argv, parameters) {
         // Show usage information.
         console.log("Usage:");
         console.group();
-        console.log("suspend <VM#>\n");
+        console.log("%s suspend <VM#>\n", path.basename(argv[0]));
         console.groupEnd();
 
         // Show help description
