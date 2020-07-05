@@ -74,7 +74,12 @@ module.exports = {
         };
 
         // Spawn arguments
-        const arguments = [sshHost, '-l', username, '-p', sshPort];
+        const arguments = [
+            sshHost,
+            '-l', username,
+            '-p', sshPort,
+            '-A'
+        ];
 
         // If byobu/tmux/screen is running locally, suppress it from
         // automatically running remotely
