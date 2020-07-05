@@ -66,7 +66,7 @@ module.exports = {
         return this.execute(this.managerCommand() + " controlvm " + uuid + " savestate");
     },
 
-    ssh(sshHost, sshPort, username) {
+    ssh(sshHost, sshPort, username, extraParameters) {
         // Spawn options
         const options = {
             stdio: [ 0, 1, 2 ],
@@ -80,6 +80,11 @@ module.exports = {
             '-p', sshPort,
             '-A'
         ];
+
+        // If there are extra parameters, append them to the arguments
+        extraParameters.forEach((parameter) => {
+            arguments.push(parameter);
+        });
 
         // If byobu/tmux/screen is running locally, suppress it from
         // automatically running remotely

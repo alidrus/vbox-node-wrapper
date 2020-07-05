@@ -92,11 +92,14 @@ if (process.argv.length >= 3 && process.argv[2] == "ssh")
     if (process.argv.length >= 5 && process.argv[3].match(/^[0-9]+$/g) && process.argv[4])
     {
         const vmNum    = parseInt(process.argv[3], 10),
-              username = process.argv[4];
+              username = process.argv[4],
+              extraParameters = Array.from(process.argv);
+
+        extraParameters.splice(0, 5);
 
         if (config.config[vmNum])
         {
-            ssh(config.config[vmNum], username);
+            ssh(config.config[vmNum], username, extraParameters);
         }
     }
     else

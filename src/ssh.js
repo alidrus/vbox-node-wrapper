@@ -7,7 +7,7 @@ const process = require("process"),
 
 const commands = require("./commands.js");
 
-module.exports = (vmConfig, username) => {
+module.exports = (vmConfig, username, extraParameters) => {
     if (!process.env.SSH_AUTH_SOCK)
     {
         let error = new Error("SSH_AUTH_SOCK environment variable not found");
@@ -24,5 +24,5 @@ module.exports = (vmConfig, username) => {
         process.exit(1);
     }
 
-    commands.ssh(vmConfig["sshHost"], vmConfig["sshPort"], username);
+    commands.ssh(vmConfig["sshHost"], vmConfig["sshPort"], username, extraParameters);
 };
