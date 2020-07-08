@@ -31,7 +31,7 @@ if (process.argv.length <= 2 || (process.argv.length >= 3 && process.argv[2] ===
 }
 
 // VM Listing
-if (process.argv[2] == "ls")
+if (process.argv.length >= 3 && process.argv[2] == "ls")
 {
     console.log(ls(config));
 }
