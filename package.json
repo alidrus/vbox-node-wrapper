@@ -15,8 +15,8 @@
     "scripts": {
         "dev": "yarn build-development",
         "prod": "yarn build-production",
-        "build-development": "webpack --config webpack.config.js",
-        "build-production": "pkg . --output dist/vbox",
+        "build-development": "NODE_ENV=development webpack --config webpack.config.js",
+        "build-production": "NODE_ENV=production pkg . --output dist/vbox",
         "installbin": "[ -e dist/vbox ] || yarn prod >& /dev/null && mkdir -p ${HOME}/bin && install -m 0755 dist/vbox ${HOME}/bin",
         "cleanup": "rm -fr dist/*"
     },
