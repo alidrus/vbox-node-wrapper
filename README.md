@@ -19,12 +19,12 @@ To use this utility, you will need:
 
 
 ## Build and Install
-To produce the bundled script *dist/vbox.js*, run `yarn dev` at the top level
-folder of this repository. This script may be executed by running `node
-dist/vbox.js`.
+To produce the executable *dist/vbox*, run `yarn build` at the top level folder
+of this repository. This script may be executed directly, as such:
 
-Alternatively, you can compile it as a native executable *dist/vbox* by
-running `yarn prod` and be run directly on the command line.
+```
+./dist/vbox
+```
 
 To install it in your home *bin/* directory, run `yarn install`.
 
