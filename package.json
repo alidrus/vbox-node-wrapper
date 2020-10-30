@@ -13,25 +13,17 @@
         ]
     },
     "scripts": {
-        "dev": "yarn build-development",
-        "prod": "yarn build-production",
-        "build-development": "NODE_ENV=development webpack --config webpack.config.js",
-        "build-production": "NODE_ENV=production pkg . --output dist/vbox",
+        "build": "NODE_ENV=production pkg . --output dist/vbox",
         "installbin": "[ -e dist/vbox ] || yarn prod >& /dev/null && mkdir -p ${HOME}/bin && install -m 0755 dist/vbox ${HOME}/bin",
         "cleanup": "rm -fr dist/*"
     },
     "author": "Abu Bakar Al-Idrus",
     "license": "MIT",
     "devDependencies": {
-        "@babel/cli": "7.12.1",
-        "@babel/core": "^7.0.0",
-        "@babel/polyfill": "7.12.1",
-        "@babel/preset-env": "7.12.1",
-        "@babel/register": "7.12.1",
+        "path-browserify": "^1.0.1",
         "pkg": "^4.4.9",
+        "process": "^0.11.10",
         "stringcase": "^4.3.1",
-        "tty-table": "^4.1.3",
-        "webpack": "5.1.3",
-        "webpack-cli": "4.1.0"
+        "tty-table": "^4.1.3"
     }
 }
