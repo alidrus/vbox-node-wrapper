@@ -13,7 +13,7 @@
         ]
     },
     "scripts": {
-        "build": "NODE_ENV=production pkg . --output dist/vbox",
+        "build": "NODE_ENV=production pkg . --targets latest --output dist/vbox",
         "installbin": "[ -e dist/vbox ] || yarn prod >& /dev/null && mkdir -p ${HOME}/bin && install -m 0755 dist/vbox ${HOME}/bin",
         "cleanup": "rm -fr dist/*"
     },
