@@ -1,0 +1,118 @@
+#!/usr/bin/env node
+/**
+ * vim: syntax=javascript expandtab tabstop=4 shiftwidth=4 softtabstop=4:
+ */
+
+// Import basename from path
+const { basename } = require('path');
+
+// Import argv, env, exit and stdout from process
+const {
+    argv, env, exit, stdout,
+} = require('process');
+
+// Import execSync and spawn from child_process
+const {
+    execSync, spawn,
+} = require('child_process')
+
+// Import Watchpack class
+const Watchpack = require('watchpack');
+
+// Create instance of Watchpack
+const wp = new Watchpack({
+    aggregateTimeout: 2000,
+});
+
+// Folders to check
+const folders = [];
+
+// Check if the fix command was appended on the command line
+const fix = (() => {
+    if (argv.length < 3) {
+        return false;
+    }
+
+    let fixCmd = false;
+    argv.forEach((arg, index) => {
+        // Was 'fix' specified on the command line?
+        if (index >= 3 && arg.toLowerCase() === 'fix') {
+            fixCmd = true;
+            return;
+        }
+
+        // Assume anything else are folders
+        folders.push(arg);
+    });
+
+    return fixCmd;
+})();
+
+// If we are missing the folders argument then display usage and exit
+if (folders.length < 1) {
+    stdout.write('Usage: ' + basename(argv[1]) + ' <folders...> [fix]\n');
+
+    exit(1);
+}
+
+// Get the full path for the yarn command
+const yarnCommand = execSync('which yarn', {
+    encoding: 'utf8'
+}).trim();
+
+// Spawn options
+const options = {
+    stdio: [ 0, 1, 2 ],
+    env,
+};
+
+// Spawn arguments
+const arguments = [];
+
+// Add argument to yarn command
+arguments.push('lint' + (fix ? 'fix' : ''));
+
+// Lint running
+let running = false;
+
+// Function to run the lint command
+const runLint = () => {
+    if (running) {
+        return;
+    }
+
+    if (!stdout.isTTY) {
+        const run = spawn(yarnCommand, arguments, options);
+
+        running = true;
+
+        run.on('close', () => {
+            running = false;
+        });
+
+        return;
+    }
+
+    stdout.cursorTo(0, 0, () => {
+        stdout.clearScreenDown(async () => {
+            const run = spawn(yarnCommand, arguments, options);
+
+            running = true;
+
+            run.on('close', () => {
+                running = false;
+            });
+        });
+    });
+};
+
+// When a change is detected in the folder we are watching, run lint
+wp.on('aggregated', () => {
+    runLint();
+});
+
+// Set up the watcher on the folders
+wp.watch(['**/*.js'], folders, Date.now());
+
+// Run lint the first time this run
+runLint();
